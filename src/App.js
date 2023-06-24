@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Players from "./components/Players";
+import { BrowserRouter } from "react-router-dom";
+import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import Footer from "./components/Footer";
+import ListofPlayers from "./components/ListofPlayers";
+import { Routes, Route } from "react-router-dom";
+import Add from "./components/Add";
+import DetailPlayer from "./components/DetailPlayer";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ResponsiveAppBar />
+      <Routes>
+        <Route path="/" element={<Players />}></Route>
+        <Route path="/dashboard" element={<ListofPlayers />}></Route>
+        <Route path="/add" element={<Add />}></Route>
+        <Route path="/update/:id" element={<Add />}></Route>
+        <Route path="/detail/:id" element={<DetailPlayer />}></Route>
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
