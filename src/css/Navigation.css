@@ -1,0 +1,45 @@
+
+
+/*switch mode*/
+.switch:has(.btn-toggle-theme) {
+    cursor: pointer;
+}
+  
+  .switch label {
+    font-size: 1em;
+    color: var(--nav-text-color);
+  }
+  
+  /*Inactive lever track*/
+  .switch label .lever {
+    background-color: #e8e8e8;
+  }
+  
+  /*Inactive lever knob on hover*/
+  input[type=checkbox]:not(:disabled)~.lever:active:before,
+  input[type=checkbox]:not(:disabled).tabbed:focus~.lever::before {
+    background-color: rgb(185, 136, 90, 0.7);
+  }
+  
+  /*Inactive lever knob*/
+  .switch label .lever:after {
+    background-color: #d16e12;
+  }
+  
+  /*Active lever track*/
+  .switch label input[type=checkbox]:checked+.lever {
+    background-color: rgb(75, 75, 75);
+  }
+  
+  /*Active lever knob on hover*/
+  .switch label input[type=checkbox]:checked+.lever:before,
+  .switch label input[type=checkbox]:checked+.lever:after {
+    background-color: rgba(167, 155, 66, 0.7);
+  }
+  
+  /*Active lever knob*/
+  .switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #91830b;
+  }
+  
+  /*### ThemeSwitch_END ###*/

@@ -1,0 +1,45 @@
+/*### FilmDetails_START ###*/
+
+#film-details .poster {
+    width: 100%;
+  }
+  
+  #film-details .info .meta-info {
+    display: flex;
+  }
+  
+  #film-details .collection.cast .collection-item.avatar {
+    text-align: left;
+  }
+  
+  #film-details .collection.cast .collection-item.avatar .title {
+    display: initial;
+    height: auto;
+    margin: 0;
+    font-size: inherit !important;
+  }
+  
+  #film-details .info .year,
+  #film-details .info .nation {
+    width: 50%;
+    font-size: 1.6rem;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  #film-details .info .cast {
+    font-size: 1.35rem;
+  }
+  
+  #film-details .info .sypnosis {
+    font-size: 1.2em;
+    margin-top: 1em;
+    padding-inline: 0.8em;
+    text-align: center;
+  }
+  
+  
+.film-box img{
+  height:auto;
+  object-fit:cover;
+}

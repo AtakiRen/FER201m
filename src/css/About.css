@@ -1,0 +1,11 @@
+.opa{
+    opacity: 0.4;
+  }
+  
+  .about{
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    min-height: 83.5vh;
+  }
