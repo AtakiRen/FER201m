@@ -13,26 +13,33 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "react-router-dom";
+import { UserAuth } from "../Context/AuthContext";
 
 const pages = ["Home", "TopPlayers", "Store"];
-const settings = ["Profile", "Account", "Dashboard", "Add Players", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Add Players", "Logout"];
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const { user, logOut } = UserAuth();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -41,13 +48,11 @@ function ResponsiveAppBar() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-
+          {/* <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
             component="a"
-            //  href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -58,6 +63,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
+            {/**  Link to HOMEPAGE */}
             <Link
               to="/"
               style={{
@@ -102,6 +108,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  {/** if page  == home => HOMEPAGE */}
                   {page === "Home" ? (
                     <Link
                       to="/"
@@ -116,7 +123,15 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <Link to="/">
+          <Link
+            to="/"
+            style={{
+              // Apply inline styles to the Link component
+              display: "block",
+              textDecoration: "none",
+              color: "inherit",
+            }}
+          >
             <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           </Link>
 
@@ -151,49 +166,57 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  {setting === "Dashboard" ? (
-                    <Link
-                      to="/dashboard"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </Link>
-                  ) : setting === "Add Players" ? (
-                    <Link
-                      to="/add"
-                      style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <Typography textAlign="center">{setting}</Typography>
-                    </Link>
-                  ) : (
-                    <Typography textAlign="center">{setting}</Typography>
-                  )}
-                </MenuItem>
-              ))}
-            </Menu>
+            {user?.displayName ? (
+              <div>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar alt={user.email} src={user.photoURL} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link to="/dashboard" style={{ textDecoration: "none" }}>
+                        Dashboard
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem>
+                    <Typography textAlign="center" onClick={handleSignOut}>
+                      Logout
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">
+                      <Link to="/add" style={{ textDecoration: "none" }}>
+                        Add Players
+                      </Link>
+                    </Typography>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <Link to="/login" style={{ textDecoration: "none" }}>
+                <Button sx={{ my: 2, color: "white", display: "block" }}>
+                  Sign in
+                </Button>
+              </Link>
+            )}
           </Box>
         </Toolbar>
       </Container>
